@@ -13,10 +13,6 @@ l
 .src/main/java/romatattoo/entities/Tatuaje.java,d\7\d7a0480b934f305a1f572a77d84a987882ce0769
 R
 "src/main/java/romatattoo/Main.java,f\8\f8376693598e7d55b7c3b0d8ca00e3359bf8096c
-[
-+src/main/java/romatattoo/entities/User.java,a\f\af2e7196b92e4b92d9a2b46f93608316038d9249
-i
-9src/main/java/romatattoo/repositories/UserRepository.java,1\7\17f9369254b7d0e81dd4fa18f3bdf1582c8c7406
 q
 Asrc/main/java/romatattoo/repositories/TipoProductoRepository.java,7\6\76355587e95d47fef35bf06e7b92a1d2ff788e5d
 _
