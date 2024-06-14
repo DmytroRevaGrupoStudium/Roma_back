@@ -1,0 +1,40 @@
+
+˜	java:S117Y"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(®à´Èúÿÿÿÿ8ËÂ€õ€2J$0be41cad-7ead-4764-8e5b-c3acebac4f35
+ª
+java:S1488z"bImmediately return this expression instead of assigning it to the temporary variable "userTienda".(£©çëúÿÿÿÿ8˜Ê¶õ€2J$37399bd8-a146-4d34-a0bf-7c608dea1322
+y
+java:S18743"1Remove this use of "setClaims"; it is deprecated.(Ûªæ§ûÿÿÿÿ8æÂ€õ€2J$dbeabc46-67e2-44b0-a7a0-3f96cb20f60c
+u
+java:S18744"2Remove this use of "setSubject"; it is deprecated.(òÃêù8æÂ€õ€2J$a0c0c553-25e9-4db1-92e8-803cd5d14437
+v
+java:S18745"3Remove this use of "setIssuedAt"; it is deprecated.(øÔ÷ò8çÂ€õ€2J$ac9401ee-5188-40d7-b1bc-8972dd182792
+}
+java:S18746"5Remove this use of "setExpiration"; it is deprecated.(ã§ĞŸÿÿÿÿÿ8èÂ€õ€2J$a5a17b05-faf3-45fe-9804-d4e1fc7892b9
+s
+java:S18747"0Remove this use of "signWith"; it is deprecated.(ÅşØ·8èÂ€õ€2J$305ac5cc-b872-47a1-95ab-11a87f71c3e8
+}
+java:S18747":Remove this use of "SignatureAlgorithm"; it is deprecated.(ÅşØ·8éÂ€õ€2J$bb0068b8-dde5-45f9-b3ed-866b09c0e3e3
+}
+java:S18747":Remove this use of "SignatureAlgorithm"; it is deprecated.(ÅşØ·8éÂ€õ€2J$2b448d24-4741-4c51-b655-cd36b865f3f5
+w
+java:S1874R"5Remove this use of "setSigningKey"; it is deprecated.(¨½–88Çøõ€2J$8af534e9-da16-4a4d-82d5-63442eb4af81
+~
+java:S1874T"6Remove this use of "parseClaimsJws"; it is deprecated.(ëÙ–ºıÿÿÿÿ8Èøõ€2J$5e12b629-6a43-4516-85bd-00bf1ac1a104
+r
+java:S1874U"/Remove this use of "getBody"; it is deprecated.(ÊÄ¿Ì8Èøõ€2J$d104e096-393e-45bb-9805-20e2628e4b97
+w
+java:S1874e"5Remove this use of "setSigningKey"; it is deprecated.(¨½–88Á¿›õ€2J$923f70f7-3795-42b4-b86a-27580fb431e5
+~
+java:S1874g"6Remove this use of "parseClaimsJws"; it is deprecated.(ËƒÎÑüÿÿÿÿ8Â¿›õ€2J$80f476f1-3701-4c84-a3f3-b7a432a6a77c
+y
+java:S1874k"1Remove this use of "setClaims"; it is deprecated.(“‡¾˜ıÿÿÿÿ8·™õ€2J$ffa41b62-e9c7-47e7-bec0-508c40becaad
+w
+java:S1874k"/Remove this use of "getBody"; it is deprecated.(“‡¾˜ıÿÿÿÿ8ä˜™õ€2J$efb0fbc4-cf39-41ba-bf6d-1cf5e48271fc
+}
+java:S1874l"5Remove this use of "setExpiration"; it is deprecated.(Ñôøƒüÿÿÿÿ8ä˜™õ€2J$0f40765e-dc38-4e6d-bd15-c14938fa411d
+s
+java:S1874m"0Remove this use of "signWith"; it is deprecated.(ÅşØ·8¸™õ€2J$9141984a-739d-499e-aae8-5aa978619a72
+}
+java:S1874m":Remove this use of "SignatureAlgorithm"; it is deprecated.(ÅşØ·8¸™õ€2J$2610d0ff-4754-4279-8600-1034a0c8ca07
+}
+java:S1874m":Remove this use of "SignatureAlgorithm"; it is deprecated.(ÅşØ·8å˜™õ€2J$30ba02dd-f44c-4b82-bf7f-68878e30bd4d

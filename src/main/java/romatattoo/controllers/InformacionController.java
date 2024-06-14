@@ -8,7 +8,7 @@ import romatattoo.services.InformacionService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/informacion")
+@RequestMapping("/api/informacion")
 public class InformacionController {
 
     private final InformacionService informacionService;
