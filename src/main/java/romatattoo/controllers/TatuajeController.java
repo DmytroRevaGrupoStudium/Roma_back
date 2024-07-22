@@ -10,13 +10,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/tatuajes")
 public class TatuajeController {
-    private final TatuajeService tatuajeService;
 
+    // Creación y inyección de servicio
+    private final TatuajeService tatuajeService;
     @Autowired
     public TatuajeController(TatuajeService tatuajeService) {
         this.tatuajeService = tatuajeService;
     }
 
+    // Métodos REST para gestión de tabla de tatuajes
     @GetMapping
     public List<Tatuaje> obtenerTodosLosTatuajes() {
         return tatuajeService.obtenerTodosLosTatuajes();

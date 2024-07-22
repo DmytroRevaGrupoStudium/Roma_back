@@ -49,3 +49,13 @@ h
 8src/main/java/romatattoo/services/UserTiendaService.java,d\f\dffaabab8fd546cf896a19248031f18b25f6292f
 n
 >src/main/java/romatattoo/controllers/UserTiendaController.java,5\6\563c1cabfed163d64893a84996f2d640d4c65f3f
+m
+=src/main/java/romatattoo/repositories/ProductoRepository.java,1\f\1ffef0660c18a09723749cd8b97cfc66731b81e7
+l
+<src/main/java/romatattoo/repositories/TatuajeRepository.java,7\6\76882d44b67235105c560aa5669fb8fda09d1985
+f
+6src/main/java/romatattoo/services/ProductoService.java,9\e\9e8f52cff126eda781bcab37bb2cab5c4844e758
+e
+5src/main/java/romatattoo/services/TatuajeService.java,4\e\4ee58272dd1012952c4065b1c249de2810d67f54
+j
+:src/main/java/romatattoo/services/TipoProductoService.java,6\3\630fbb3e3047343b10dac41425657ed62f70495c

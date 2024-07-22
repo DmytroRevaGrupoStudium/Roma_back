@@ -20,9 +20,11 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
 
+    // Creamos objetos para la clase
     private final UserDetailsService userDetailsService;
     private final JwtService jwtService;
 
+    // Deifnimos los objetos para el tema de autorización, codificación en formato Bearer y formateo de datos en JSON
     @Override
     public void doFilterInternal(@NonNull HttpServletRequest request,
                                  @NonNull HttpServletResponse response,
@@ -36,7 +38,9 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        jwt = autHeader.substring(7); //PORQUE EL TOKEN EMPIEZA EN EL 7
+        jwt = autHeader.substring(7); //TOKEN EMPIEZA EN LA POSICIÓN 7 DE CODIFICACIÓN
+
+        // Codificacmos el token y pasamos por el filtrado
         userEmail=jwtService.getUserName(jwt);
         if(userEmail!=null&& SecurityContextHolder.getContext().getAuthentication()==null){
             UserDetails userDetails=this.userDetailsService.loadUserByUsername(userEmail);

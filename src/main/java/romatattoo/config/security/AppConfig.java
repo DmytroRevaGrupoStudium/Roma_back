@@ -18,14 +18,17 @@ import romatattoo.repositories.UserTiendaRepository;
 @RequiredArgsConstructor
 public class AppConfig {
 
+    // Intectamos la clase de repositorio
     private final UserTiendaRepository userRepository;
 
+    // Método para consulta de objeto
     @Bean
     public UserDetailsService userDetailsService(){
         return username -> userRepository.findUserByEmail(username)
                 .orElseThrow(()-> new UsernameNotFoundException("El usuario no ha sido encontrado"));
     }
 
+    // Método nativo de Spring Security para la autenticación
     @Bean
     public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider authenticationProvider=new DaoAuthenticationProvider();
@@ -34,11 +37,13 @@ public class AppConfig {
         return authenticationProvider;
     }
 
+    // Método nativo de Spring Security para la codificación
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    // Método nativo de Spring Security para la autenticación
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();

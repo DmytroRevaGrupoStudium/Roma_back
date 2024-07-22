@@ -11,6 +11,7 @@ import java.util.Optional;
 @Service
 public class TatuajeService {
 
+    // Creamos objeto y lo inyectamos
     private final TatuajeRepository tatuajeRepository;
 
     @Autowired
@@ -18,6 +19,7 @@ public class TatuajeService {
         this.tatuajeRepository = tatuajeRepository;
     }
 
+    // Métodos para la gestión de tabla de Tatuajes
     public List<Tatuaje> obtenerTodosLosTatuajes() {
         return tatuajeRepository.findAll();
     }

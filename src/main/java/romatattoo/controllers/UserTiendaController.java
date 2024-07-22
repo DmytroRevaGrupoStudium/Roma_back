@@ -11,6 +11,7 @@ import java.util.Optional;
 @RequestMapping("/api/user_tienda")
 public class UserTiendaController {
 
+    // Creación y inyección de servicio
     private final UserTiendaService userTiendaService;
 
     @Autowired
@@ -18,6 +19,7 @@ public class UserTiendaController {
         this.userTiendaService = userTiendaService;
     }
 
+    // Métodos REST para gestión de tabla de usuarios
     @GetMapping("/{email}")
     public Optional<UserTienda> obtenerUserTiendaByEmail(@PathVariable String email) {
         return userTiendaService.obtenerUserTiendaByEmail(email);

@@ -11,13 +11,14 @@ import java.util.List;
 @RequestMapping("/api/tipo_productos")
 public class TipoProductoController {
 
+    // Creación y inyección de servicio
     private final TipoProductoService tipoProductoService;
-
     @Autowired
     public TipoProductoController(TipoProductoService tipoProductoService) {
         this.tipoProductoService = tipoProductoService;
     }
 
+    // Métodos REST para gestión de tabla de tipo de productos
     @GetMapping
     public List<TipoProducto> obtenerTodosLosTiposDeProductos() {
         return tipoProductoService.obtenerTodosLosTiposDeProductos();

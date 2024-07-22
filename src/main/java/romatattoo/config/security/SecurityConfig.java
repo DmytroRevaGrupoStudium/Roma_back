@@ -19,11 +19,12 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableMethodSecurity
 public class SecurityConfig {
 
+    // Variables predeterminadas de Spring
     public static final String API = "/api/**";
     private final JwtFilter jwtFilter;
-
     private final AuthenticationProvider authenticationProvider;
 
+    // Definir seguridad de página a base de roles y rutas de acceso
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(csrf -> csrf.disable())

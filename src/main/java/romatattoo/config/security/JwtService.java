@@ -26,19 +26,22 @@ import java.util.function.Function;
 @Service
 public class JwtService implements UserDetailsService {
 
+    // Creación de codificación
     private static final String SECRET_KEY = "a2fe162bb7a7b0e56d413cc696a64f243d3e55ad4ba65608ef77ddd73e03ba44";
 
+    // Creación de objeto para repositorio
     private final UserTiendaRepository userTiendaRepository;
 
+    // Inyectamos
     @Autowired
     public JwtService(UserTiendaRepository userTiendaRepository) {
         this.userTiendaRepository = userTiendaRepository;
     }
 
+    // Métodos que generan token con datos del usuario
     public String generateToken(UserDetails userDetails){
         return generateToken(new HashMap<>(), userDetails);
     }
-
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         // Obtener el rol del usuario
         String userRole = getUserRoleFromUserDetails(userDetails);
@@ -55,6 +58,8 @@ public class JwtService implements UserDetailsService {
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
+
+    // Método para recuperar rol registrado de usuario
     public String getUserRoleFromUserDetails(UserDetails userDetails) {
         // Obtener los roles del usuario desde userDetails
         Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
@@ -67,15 +72,14 @@ public class JwtService implements UserDetailsService {
         }
     }
 
+    // Métodos para recuperar datos del token
     public String getUserName(String token){
         return getClaim(token, Claims::getSubject);
     }
-
     public <T> T getClaim(String token, Function<Claims, T> claimsResolver){
         final Claims claims=getAllClaims(token);
         return claimsResolver.apply(claims);
     }
-
     private Claims getAllClaims(String token) {
         return Jwts
                 .parser()
@@ -84,17 +88,16 @@ public class JwtService implements UserDetailsService {
                 .parseClaimsJws(token)
                 .getBody();
     }
-
     private Key getSignInKey() {
         byte[]KeyBytes= Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(KeyBytes);
     }
-
     public boolean validateToken(String token, UserDetails userDetails) {
         final String username = getUserName(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
+    // Método para ampliar funcionalidad de token
     public String modifyTokenExpiration(String token, long expirationTimeInMillis) {
         // Parsear el token utilizando JwtParserBuilder
         Jws<Claims> parsedToken = Jwts.parser()
@@ -110,6 +113,7 @@ public class JwtService implements UserDetailsService {
                 .compact();
     }
 
+    // Métodos para revisión de token
     private boolean isTokenExpired(String token) {
         return getExpiration(token).before(new Date());
     }
@@ -117,12 +121,12 @@ public class JwtService implements UserDetailsService {
         return getClaim(token, Claims::getExpiration);
     }
 
+    // Método para recuperar usuario a base de su email
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        UserTienda userTienda = userTiendaRepository.findUserByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
 
-        return userTienda;
+        return userTiendaRepository.findUserByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
     }
 
 }

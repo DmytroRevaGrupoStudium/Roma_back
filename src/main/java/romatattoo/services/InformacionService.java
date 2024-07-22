@@ -11,13 +11,14 @@ import java.util.Optional;
 @Service
 public class InformacionService {
 
+    // Creamos objeto y lo inyectamos
     private final InformacionRepository informacionRepository;
-
     @Autowired
     public InformacionService(InformacionRepository informacionRepository) {
         this.informacionRepository = informacionRepository;
     }
 
+    // Métodos para la gestión de tabla de Información
     public List<Informacion> obtenerTodosLosDatos() {
         return informacionRepository.findAll();
     }

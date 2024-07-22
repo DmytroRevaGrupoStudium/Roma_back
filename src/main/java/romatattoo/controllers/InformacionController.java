@@ -11,13 +11,16 @@ import java.util.List;
 @RequestMapping("/api/informacion")
 public class InformacionController {
 
+    // Objeto de servicio
     private final InformacionService informacionService;
 
+    // Inyección
     @Autowired
     public InformacionController(InformacionService informacionService) {
         this.informacionService = informacionService;
     }
 
+    // Métodos REST para la gestión de tabla de información
     @GetMapping
     public List<Informacion> obtenerTodosLosTiposDeProductos() {
         return informacionService.obtenerTodosLosDatos();

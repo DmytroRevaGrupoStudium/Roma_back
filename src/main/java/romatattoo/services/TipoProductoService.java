@@ -11,6 +11,7 @@ import java.util.Optional;
 @Service
 public class TipoProductoService {
 
+    // Creamos objeto y lo inyectamos
     private final TipoProductoRepository tipoProductoRepository;
 
     @Autowired
@@ -18,6 +19,7 @@ public class TipoProductoService {
         this.tipoProductoRepository = productoRepository;
     }
 
+    // Métodos para la gestión de tabla de Tipo de productos
     public List<TipoProducto> obtenerTodosLosTiposDeProductos() {
         return tipoProductoRepository.findAll();
     }

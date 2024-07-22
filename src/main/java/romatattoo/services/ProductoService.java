@@ -10,6 +10,7 @@ import java.util.Optional;
 @Service
 public class ProductoService {
 
+    // Creamos objeto y lo inyectamos
     private final ProductoRepository productoRepository;
 
     @Autowired
@@ -17,6 +18,7 @@ public class ProductoService {
         this.productoRepository = productoRepository;
     }
 
+    // Métodos para la gestión de tabla de Productos
     public List<Producto> obtenerTodosLosProductos() {
         return productoRepository.findAll();
     }

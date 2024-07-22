@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.util.List;
 
+// Entidad con config de Lombok y sus campos correspondientes, en formato correspondiente
 @Data
 @Entity
 @Table(name = "tatuajes")
@@ -19,6 +20,7 @@ public class Tatuaje {
     @Column(name = "descripcion")
     private String descripcion;
 
+    // Campo especial para guardar imagenes en formato base64 que es formato String
     @ElementCollection
     @CollectionTable(name = "tatuaje_imagenes", joinColumns = @JoinColumn(name = "tatuaje_id"))
     @Column(name = "imagen", columnDefinition = "LONGTEXT")

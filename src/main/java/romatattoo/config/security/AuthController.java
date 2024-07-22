@@ -18,11 +18,13 @@ import java.util.Collections;
 @RequestMapping("/api/auth")
 public class AuthController {
 
+    // Creamos objetos para cumplir con servicio de autenticación
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final UserTiendaService userTiendaService;
     private final PasswordEncoder passwordEncoder;
 
+    // Inyectamos los objetos
     @Autowired
     public AuthController(AuthenticationManager authenticationManager, JwtService jwtService, UserTiendaService userTiendaService, PasswordEncoder passwordEncoder) {
         this.authenticationManager = authenticationManager;
@@ -31,6 +33,7 @@ public class AuthController {
         this.passwordEncoder = passwordEncoder;
     }
 
+    // Método REST para la autenticación
     @PostMapping("/login")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody UserTienda userTienda) {
         try {
@@ -41,6 +44,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
 
+        // Si no salta el catch, cargamos datos de usuario y generamos su token correspondiente
         final UserDetails userDetails = jwtService.loadUserByUsername(userTienda.getEmail());
         final String jwt = jwtService.generateToken(userDetails);
 
@@ -48,6 +52,7 @@ public class AuthController {
         return ResponseEntity.ok(Collections.singletonMap("token", jwt));
     }
 
+    // Método REST para el registro de usuario nuevo
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody UserTienda userTienda) {
         // Validar si el usuario ya existe

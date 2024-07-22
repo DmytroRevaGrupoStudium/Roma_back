@@ -13,6 +13,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+// Entidad con config de Lombok y sus campos correspondientes, en formato correspondiente
+    // Entidad más completa ya que trata de usuarios de la página web, se implementan herramientas de Spring Security
 @Entity
 @Data
 @NoArgsConstructor
@@ -33,10 +35,12 @@ public class UserTienda implements UserDetails {
 
     private String telefono;
 
+    // Campo de rol
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private List<Role> roles;
 
+    // Método para recuperar rol de user
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream()
@@ -44,6 +48,7 @@ public class UserTienda implements UserDetails {
                 .collect(Collectors.toList());
     }
 
+    // Getter y Setter de datos de user proporcionado por Spring Security que no se crean con Lombok y se crearon manualmente
     @Override
     public String getPassword() {
         return password;
