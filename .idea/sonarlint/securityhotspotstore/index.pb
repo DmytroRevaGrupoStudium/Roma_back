@@ -59,3 +59,7 @@ e
 5src/main/java/romatattoo/services/TatuajeService.java,4\e\4ee58272dd1012952c4065b1c249de2810d67f54
 j
 :src/main/java/romatattoo/services/TipoProductoService.java,6\3\630fbb3e3047343b10dac41425657ed62f70495c
+c
+3src/main/java/romatattoo/services/EmailService.java,2\9\293edbd8cb9e8d402677dab7a73b92b1d345e8ad
+i
+9src/main/java/romatattoo/controllers/EmailController.java,6\f\6f7c90fe606ee71a7b1c3bb8e419dac901bd57d4

@@ -9,7 +9,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import romatattoo.controllers.EmailController;
 import romatattoo.entities.UserTienda;
+import romatattoo.services.EmailService;
 import romatattoo.services.UserTiendaService;
 
 import java.util.Collections;
@@ -23,14 +25,16 @@ public class AuthController {
     private final JwtService jwtService;
     private final UserTiendaService userTiendaService;
     private final PasswordEncoder passwordEncoder;
+    private final EmailController emailController;
 
     // Inyectamos los objetos
     @Autowired
-    public AuthController(AuthenticationManager authenticationManager, JwtService jwtService, UserTiendaService userTiendaService, PasswordEncoder passwordEncoder) {
+    public AuthController(AuthenticationManager authenticationManager, JwtService jwtService, UserTiendaService userTiendaService, PasswordEncoder passwordEncoder, EmailController emailController) {
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
         this.userTiendaService = userTiendaService;
         this.passwordEncoder = passwordEncoder;
+        this.emailController = emailController;
     }
 
     // Método REST para la autenticación
@@ -65,6 +69,8 @@ public class AuthController {
 
         // Guardar el usuario en la base de datos
         userTiendaService.save(userTienda);
+
+        emailController.sendEmail(userTienda.getEmail(), userTienda.getNombre()+" "+userTienda.getApellidos());
 
         // Devolver una respuesta de éxito
         return ResponseEntity.ok(Collections.singletonMap("message", "Usuario creado correctamente"));

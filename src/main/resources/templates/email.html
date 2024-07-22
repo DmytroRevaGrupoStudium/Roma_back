@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Example Email</title>
+</head>
+<body>
+<p th:text="'Hola, ' + ${name} + '!'"></p>
+<p th:text="'No responda a este correo, es un mensaje automático: '"></p>
+<ul>
+    <li th:each="entry : ${details}">
+        <span th:text="${entry.key}"></span>: <span th:text="${entry.value}"></span>
+    </li>
+</ul>
+</body>
+</html>
