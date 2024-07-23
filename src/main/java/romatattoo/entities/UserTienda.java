@@ -48,6 +48,9 @@ public class UserTienda implements UserDetails {
                 .collect(Collectors.toList());
     }
 
+    // Campo para representar el estado de cuenta
+    private boolean isActive = false;
+
     // Getter y Setter de datos de user proporcionado por Spring Security que no se crean con Lombok y se crearon manualmente
     @Override
     public String getPassword() {
@@ -76,6 +79,6 @@ public class UserTienda implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isActive;
     }
 }

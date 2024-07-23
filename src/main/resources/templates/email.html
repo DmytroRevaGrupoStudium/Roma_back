@@ -1,15 +1,71 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Example Email</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Template</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .email-container {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+        .email-header {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .email-body {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .email-footer {
+            font-size: 14px;
+            color: #888;
+            margin-top: 20px;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 18px;
+        }
+        .cta-button:hover {
+            background-color: #555;
+        }
+    </style>
 </head>
 <body>
-<p th:text="'Hola, ' + ${name} + '!'"></p>
-<p th:text="'No responda a este correo, es un mensaje automático: '"></p>
-<ul>
-    <li th:each="entry : ${details}">
-        <span th:text="${entry.key}"></span>: <span th:text="${entry.value}"></span>
-    </li>
-</ul>
+<div class="email-container">
+    <div class="email-header">
+        ¡Bienvenido, <span th:text="${name}">Nombre</span>!
+    </div>
+    <div class="email-body">
+        <span th:text="${motivo}">Motivo</span>
+    </div>
+    <a th:href="@{https://qlf28rf1-4200.uks1.devtunnels.ms/activate(email=${email})}" class="cta-button">Activar Cuenta</a>
+    <div class="email-footer">
+        <p>&copy; 2024 <span th:text="${companyName}"></span>. Todos los derechos reservados.</p>
+    </div>
+</div>
 </body>
 </html>

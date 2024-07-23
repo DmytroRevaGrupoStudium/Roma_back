@@ -30,4 +30,11 @@ public class UserTiendaService {
     public void save(UserTienda userTienda) {
         userTiendaRepository.save(userTienda);
     }
+
+    public void activateUserByEmail(String email) {
+        UserTienda user = userTiendaRepository.findUserByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con el email: " + email));
+        user.setActive(true);
+        userTiendaRepository.save(user);
+    }
 }

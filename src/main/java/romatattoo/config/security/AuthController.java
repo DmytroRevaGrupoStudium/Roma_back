@@ -37,7 +37,6 @@ public class AuthController {
         this.emailController = emailController;
     }
 
-    // Método REST para la autenticación
     @PostMapping("/login")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody UserTienda userTienda) {
         try {
@@ -45,11 +44,13 @@ public class AuthController {
                     new UsernamePasswordAuthenticationToken(userTienda.getEmail(), userTienda.getPassword())
             );
         } catch (AuthenticationException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("message", "Credenciales incorrectas"));
         }
 
         // Si no salta el catch, cargamos datos de usuario y generamos su token correspondiente
         final UserDetails userDetails = jwtService.loadUserByUsername(userTienda.getEmail());
+
+        // Si cuenta está en orden, creamos token
         final String jwt = jwtService.generateToken(userDetails);
 
         // Devuelve el token dentro de un objeto JSON
@@ -61,16 +62,17 @@ public class AuthController {
     public ResponseEntity<?> registerUser(@RequestBody UserTienda userTienda) {
         // Validar si el usuario ya existe
         if (userTiendaService.existsByEmail(userTienda.getEmail())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Email already in use"));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Email ya está en uso"));
         }
+
+        // Crear y ejecutar el hilo usando una instancia anónima de Runnable
+        emailController.sendEmail(userTienda.getEmail(), userTienda.getNombre() + " " + userTienda.getApellidos(), "Registro", "Para activar su cuenta acceda a siguiente enlace:");
 
         // Encriptar la contraseña antes de guardarla en la base de datos
         userTienda.setPassword(passwordEncoder.encode(userTienda.getPassword()));
 
         // Guardar el usuario en la base de datos
         userTiendaService.save(userTienda);
-
-        emailController.sendEmail(userTienda.getEmail(), userTienda.getNombre()+" "+userTienda.getApellidos());
 
         // Devolver una respuesta de éxito
         return ResponseEntity.ok(Collections.singletonMap("message", "Usuario creado correctamente"));

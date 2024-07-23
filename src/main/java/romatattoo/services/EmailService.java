@@ -14,12 +14,13 @@ import java.util.Map;
 @Service
 public class EmailService {
 
+    // Inyectamos objetos para ejecutar un envío de correo
     @Autowired
     private JavaMailSender mailSender;
-
     @Autowired
     private TemplateEngine templateEngine;
 
+    // Método par enviar correo con plantilla configurada
     public void sendEmail(String to, String subject, String templateName, Map<String, Object> variables) throws MessagingException {
         Context context = new Context();
         context.setVariables(variables);
