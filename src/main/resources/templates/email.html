@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Email Template</title>
     <style>
         body {
+            background-color: white;
             font-family: Arial, sans-serif;
-            background-color: #f8f8f8;
-            color: #333;
+            color: #000000;
             margin: 0;
             padding: 0;
             display: flex;
@@ -17,7 +17,6 @@
             height: 100vh;
         }
         .email-container {
-            background-color: #fff;
             padding: 20px;
             border: 1px solid #ddd;
             border-radius: 8px;
@@ -40,29 +39,46 @@
             color: #888;
             margin-top: 20px;
         }
+        a {
+            color: #FFFFFF !important;
+        }
         .cta-button {
             display: inline-block;
-            background-color: #333;
-            color: #fff;
+            background-color: #000000;
             padding: 10px 20px;
             text-decoration: none;
-            border-radius: 4px;
+            border-radius: 10px;
             font-size: 18px;
+            font-weight: bold;
         }
         .cta-button:hover {
             background-color: #555;
+        }
+        .email-logo {
+            max-width: 100px;
+            height: auto;
+        }
+        .logo-block {
+            padding: 3%;
+            background-color: #000000;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
 <div class="email-container">
+    <div class="logo-block">
+        <img src="https://drive.google.com/uc?export=view&id=1r5Jl6OIjfOi3EjEoapKIj4mX_0rf4Wg7" alt="Logo" class="email-logo"/>
+    </div>
     <div class="email-header">
         ¡Bienvenido, <span th:text="${name}">Nombre</span>!
     </div>
     <div class="email-body">
         <span th:text="${motivo}">Motivo</span>
     </div>
-    <a th:href="@{https://qlf28rf1-4200.uks1.devtunnels.ms/activate(email=${email})}" class="cta-button">Activar Cuenta</a>
+    <a th:href="@{https://qlf28rf1-4200.uks1.devtunnels.ms/activate(email=${email})}" class="cta-button">
+        Activar Cuenta
+    </a>
     <div class="email-footer">
         <p>&copy; 2024 <span th:text="${companyName}"></span>. Todos los derechos reservados.</p>
     </div>
