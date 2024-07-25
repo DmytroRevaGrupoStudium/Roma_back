@@ -15,6 +15,9 @@ import romatattoo.services.EmailService;
 import romatattoo.services.UserTiendaService;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -66,7 +69,7 @@ public class AuthController {
         }
 
         // Crear y ejecutar el hilo usando una instancia anónima de Runnable
-        emailController.sendEmail(userTienda.getEmail(), userTienda.getNombre() + " " + userTienda.getApellidos(), "Registro", "Para activar su cuenta acceda a siguiente enlace:");
+        emailController.sendEmail(userTienda.getEmail(), userTienda.getNombre(), "Registro", "Bienvenido, para activar su cuenta acceda a siguiente enlace:");
 
         // Encriptar la contraseña antes de guardarla en la base de datos
         userTienda.setPassword(passwordEncoder.encode(userTienda.getPassword()));
@@ -76,5 +79,39 @@ public class AuthController {
 
         // Devolver una respuesta de éxito
         return ResponseEntity.ok(Collections.singletonMap("message", "Usuario creado correctamente"));
+    }
+
+    @GetMapping("/reset_password")
+    public ResponseEntity<Map<String, String>> resetearClave(@RequestParam("email") String email, @RequestParam("password") String password) {
+        try {
+            Optional<UserTienda> optionalUser = userTiendaService.obtenerUserTiendaByEmail(email);
+
+            if (optionalUser.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Error, usuario no existe."));
+            }
+            else
+            {
+                UserTienda userTienda = optionalUser.get();
+
+                if (passwordEncoder.matches(password, userTienda.getPassword()))
+                {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Nueva contraseña no puede ser igual a la anterior."));
+                }
+
+                userTienda.setPassword(passwordEncoder.encode(password));
+
+                userTiendaService.save(userTienda);
+                // Respuesta de éxito con formato JSON
+                Map<String, String> response = Collections.singletonMap("message", "¡Contraseña actualizada correctamente!");
+                return ResponseEntity.ok(response);
+            }
+        } catch (Exception e) {
+            // Crear un mapa con el mensaje de error
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("message", "Error durante la actualización de contraseña");
+
+            // Devolver una respuesta con el mensaje de error en formato JSON
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
     }
 }
