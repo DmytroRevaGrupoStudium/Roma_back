@@ -39,8 +39,9 @@ public class UserTiendaController {
             // Respuesta de éxito con formato JSON
             Map<String, String> response = Collections.singletonMap("message", "¡Cuenta activada correctamente!");
             return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            // Crear un mapa con el mensaje de error
+        }
+        catch (Exception e) {
+            // Crear un mensaje de error
             Map<String, String> errorResponse = new HashMap<>();
             errorResponse.put("message", "Error al activar la cuenta con email: " + email);
 

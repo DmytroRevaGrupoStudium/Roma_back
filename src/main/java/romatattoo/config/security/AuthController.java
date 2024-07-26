@@ -11,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import romatattoo.controllers.EmailController;
 import romatattoo.entities.UserTienda;
-import romatattoo.services.EmailService;
 import romatattoo.services.UserTiendaService;
 
 import java.util.Collections;
@@ -40,6 +39,7 @@ public class AuthController {
         this.emailController = emailController;
     }
 
+    // Métodos REST para los procedimientos relacionados con la autenticaciones
     @PostMapping("/login")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody UserTienda userTienda) {
         try {
@@ -60,15 +60,15 @@ public class AuthController {
         return ResponseEntity.ok(Collections.singletonMap("token", jwt));
     }
 
-    // Método REST para el registro de usuario nuevo
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody UserTienda userTienda) {
+
         // Validar si el usuario ya existe
         if (userTiendaService.existsByEmail(userTienda.getEmail())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Email ya está en uso"));
         }
 
-        // Crear y ejecutar el hilo usando una instancia anónima de Runnable
+        // Enviamos el email con confirmación de cuenta
         emailController.sendEmail(userTienda.getEmail(), userTienda.getNombre(), "Registro", "Bienvenido, para activar su cuenta acceda a siguiente enlace:");
 
         // Encriptar la contraseña antes de guardarla en la base de datos
@@ -83,30 +83,39 @@ public class AuthController {
 
     @GetMapping("/reset_password")
     public ResponseEntity<Map<String, String>> resetearClave(@RequestParam("email") String email, @RequestParam("password") String password) {
+
         try {
+            // Buscamos a user
             Optional<UserTienda> optionalUser = userTiendaService.obtenerUserTiendaByEmail(email);
 
+            // Confirmamos que user está en BD
             if (optionalUser.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Error, usuario no existe."));
             }
             else
             {
+                // Capturamos objeto en una variable
                 UserTienda userTienda = optionalUser.get();
 
+                // Comprobamos que nueva contraseña no puede ser la misma que la actual
                 if (passwordEncoder.matches(password, userTienda.getPassword()))
                 {
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Nueva contraseña no puede ser igual a la anterior."));
                 }
 
+                // Si contraseña es válida, encriptamos la contraseña
                 userTienda.setPassword(passwordEncoder.encode(password));
 
+                // Actualizamos al user
                 userTiendaService.save(userTienda);
+
                 // Respuesta de éxito con formato JSON
                 Map<String, String> response = Collections.singletonMap("message", "¡Contraseña actualizada correctamente!");
                 return ResponseEntity.ok(response);
             }
-        } catch (Exception e) {
-            // Crear un mapa con el mensaje de error
+        }
+        catch (Exception e) {
+            // Crear el mensaje de error
             Map<String, String> errorResponse = new HashMap<>();
             errorResponse.put("message", "Error durante la actualización de contraseña");
 
