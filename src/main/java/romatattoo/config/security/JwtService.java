@@ -54,8 +54,7 @@ public class JwtService implements UserDetailsService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 30000))
-                //.setExpiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * horas))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * horas))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
