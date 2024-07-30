@@ -27,8 +27,8 @@ public class UserTiendaController {
     }
 
     // Métodos REST para gestión de tabla de usuarios
-    @GetMapping("/{email}")
-    public Optional<UserTienda> obtenerUserTiendaByEmail(@PathVariable String email) {
+    @GetMapping("/get_user")
+    public Optional<UserTienda> obtenerUserTiendaByEmail(@RequestParam("email") String email) {
         return userTiendaService.obtenerUserTiendaByEmail(email);
     }
 
