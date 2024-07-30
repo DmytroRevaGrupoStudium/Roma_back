@@ -21,13 +21,14 @@ public class EmailController {
     private String companyName;
 
     // Método para configurar la plantilla de correo y enviarlo a base de Service
-    public String sendEmail(String to, String name, String subject, String mensaje) {
+    public String sendEmail(String to, String name, String subject, String mensaje, String token) {
         Map<String, Object> variables = new HashMap<>();
         variables.put("name", name);
         variables.put("subject", subject);
         variables.put ("mensaje", mensaje);
         variables.put ("companyName", companyName);
         variables.put ("email", to);
+        variables.put ("token", token);
 
         // Enviamos email con plantilla creada
         try {

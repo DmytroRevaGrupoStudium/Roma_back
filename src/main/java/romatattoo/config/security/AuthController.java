@@ -54,7 +54,7 @@ public class AuthController {
         final UserDetails userDetails = jwtService.loadUserByUsername(userTienda.getEmail());
 
         // Si cuenta está en orden, creamos token
-        final String jwt = jwtService.generateToken(userDetails);
+        final String jwt = jwtService.generateToken(userDetails, 24);
 
         // Devuelve el token dentro de un objeto JSON
         return ResponseEntity.ok(Collections.singletonMap("token", jwt));
@@ -68,14 +68,16 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Email ya está en uso"));
         }
 
-        // Enviamos el email con confirmación de cuenta
-        emailController.sendEmail(userTienda.getEmail(), userTienda.getNombre(), "Registro", "Bienvenido, para activar su cuenta acceda a siguiente enlace:");
-
         // Encriptar la contraseña antes de guardarla en la base de datos
         userTienda.setPassword(passwordEncoder.encode(userTienda.getPassword()));
 
+        // Asignar el rol específico al usuario
+        userTienda.setRoles(Collections.singletonList(Role.USER));
+
         // Guardar el usuario en la base de datos
         userTiendaService.save(userTienda);
+
+        enviarMsjActiveUser(userTienda.getEmail());
 
         // Devolver una respuesta de éxito
         return ResponseEntity.ok(Collections.singletonMap("message", "Usuario creado correctamente"));
@@ -121,6 +123,54 @@ public class AuthController {
 
             // Devolver una respuesta con el mensaje de error en formato JSON
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
+
+    // Método REST para el envío de correo de recuperación de contraseña de un usuario
+    @GetMapping("/email_reset_password")
+    public ResponseEntity<Map<String, String>> recuperarClave(@RequestParam("email") String email) {
+        try {
+            // Validar si el usuario ya existe
+            Optional<UserTienda> optionalUser = userTiendaService.obtenerUserTiendaByEmail(email);
+
+            if (optionalUser.isPresent()) {
+                UserTienda userTienda = optionalUser.get();
+
+                if (!userTienda.isActive())
+                {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Usuario con este email no está activado."));
+                }
+
+                emailController.sendEmail(email, userTienda.getNombre(), "Recuperación de contraseña", "Si no has solicitado recuperación de contraseña ignora este mensaje. Para recuperar la contraseña acceda a siguiente enlace:", jwtService.generateToken(userTienda, 1));
+                return ResponseEntity.status(HttpStatus.OK).body(Collections.singletonMap("message", "Correo fue enviado correctamente."));
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Usuario con este email no está registrado."));
+            }
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Error inesperado, intentelo más tarde."));
+        }
+    }
+
+    // Método REST para el envío de correo de recuperación de contraseña de un usuario
+    @GetMapping("/email_activar_cuenta")
+    public ResponseEntity<Map<String, String>> enviarMsjActiveUser(@RequestParam("email") String email) {
+        try {
+            // Validar si el usuario ya existe
+            Optional<UserTienda> optionalUser = userTiendaService.obtenerUserTiendaByEmail(email);
+
+            if (optionalUser.isPresent()) {
+                UserTienda userTienda = optionalUser.get();
+                emailController.sendEmail(userTienda.getEmail(), userTienda.getNombre(), "Registro", "Bienvenido, para activar su cuenta acceda a siguiente enlace:", jwtService.generateToken(userTienda, 1));
+                return ResponseEntity.status(HttpStatus.OK).body(Collections.singletonMap("message", "Correo fue enviado correctamente."));
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Usuario con este email no está registrado."));
+            }
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Error inesperado, intentelo más tarde."));
         }
     }
 }

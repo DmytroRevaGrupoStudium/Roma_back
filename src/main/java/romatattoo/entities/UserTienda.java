@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import romatattoo.config.security.Role;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,7 +39,7 @@ public class UserTienda implements UserDetails {
     // Campo de rol
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    private List<Role> roles;
+    private List<Role> roles = new ArrayList<>();
 
     // Método para recuperar rol de user
     @Override

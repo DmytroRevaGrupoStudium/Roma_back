@@ -39,10 +39,10 @@ public class JwtService implements UserDetailsService {
     }
 
     // Métodos que generan token con datos del usuario
-    public String generateToken(UserDetails userDetails){
-        return generateToken(new HashMap<>(), userDetails);
+    public String generateToken(UserDetails userDetails, int horas){
+        return generateToken(new HashMap<>(), userDetails, horas);
     }
-    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails, int horas) {
         // Obtener el rol del usuario
         String userRole = getUserRoleFromUserDetails(userDetails);
 
@@ -54,7 +54,8 @@ public class JwtService implements UserDetailsService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + 30000))
+                //.setExpiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * horas))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -128,5 +129,7 @@ public class JwtService implements UserDetailsService {
         return userTiendaRepository.findUserByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
     }
+
+
 
 }

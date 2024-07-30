@@ -76,8 +76,8 @@
     <div class="email-body">
         <span th:text="${mensaje}">Mensaje</span>
     </div>
-    <a th:if="${subject == 'Registro'}" th:href="@{https://qlf28rf1-4200.uks1.devtunnels.ms/activate(email=${email})}" class="cta-button">Activar</a>
-    <a th:if="${subject == 'Recuperación de contraseña'}" th:href="@{https://qlf28rf1-4200.uks1.devtunnels.ms/nueva_clave(email=${email})}" class="cta-button">Recuperar contraseña</a>
+    <a th:if="${subject == 'Registro'}" th:href="@{https://qlf28rf1-4200.uks1.devtunnels.ms/activate(token=${token})}" class="cta-button">Activar</a>
+    <a th:if="${subject == 'Recuperación de contraseña'}" th:href="@{https://qlf28rf1-4200.uks1.devtunnels.ms/nueva_clave(token=${token})}" class="cta-button">Recuperar contraseña</a>
     <div class="email-footer">
         <p>&copy; 2024 <span th:text="${companyName}"></span>. Todos los derechos reservados.</p>
     </div>

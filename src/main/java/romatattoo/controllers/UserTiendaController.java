@@ -49,25 +49,4 @@ public class UserTiendaController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
-
-    // Método REST para el envío de correo de recuperación de contraseña de un usuario
-    @GetMapping("/email_reset_password")
-    public ResponseEntity<Map<String, String>> recuperarClave(@RequestParam("email") String email) {
-        try {
-            // Validar si el usuario ya existe
-            Optional<UserTienda> optionalUser = userTiendaService.obtenerUserTiendaByEmail(email);
-
-            if (optionalUser.isPresent()) {
-                UserTienda userTienda = optionalUser.get();
-                emailController.sendEmail(email, userTienda.getNombre(), "Recuperación de contraseña", "Si no has solicitado recuperación de contraseña ignora este mensaje. Para recuperar la contraseña acceda a siguiente enlace:");
-                return ResponseEntity.status(HttpStatus.OK).body(Collections.singletonMap("message", "Correo fue enviado correctamente."));
-            } else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Usuario con este email no está registrado."));
-            }
-        }
-        catch (Exception e)
-        {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Error inesperado, intentelo más tarde."));
-        }
-    }
 }
