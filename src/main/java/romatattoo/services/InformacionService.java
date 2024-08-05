@@ -65,4 +65,16 @@ public class InformacionService {
         productoExistente.setValor(informacion.getValor());
         return productoExistente;
     }
+
+    public Informacion obtenerDatoPorNombre(String dato)
+    {
+        Optional<Informacion> optionalDato = informacionRepository.findInformacionByDato(dato);
+        if (optionalDato.isPresent()) {
+            return optionalDato.get();
+        } else {
+            // Manejo de caso en el que el producto no se encuentra
+            // Puedes lanzar una excepción, retornar null o realizar otro tipo de manejo
+            throw new RuntimeException("Dato no encontrado para nombre de campo: "+dato);
+        }
+    }
 }

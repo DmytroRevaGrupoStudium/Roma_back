@@ -16,6 +16,6 @@ public class Informacion {
     @Column(name = "dato")
     private String dato;
 
-    @Column(name = "valor")
+    @Column(name = "valor", columnDefinition = "LONGTEXT")
     private String valor;
 }
