@@ -29,7 +29,7 @@ public class EmailController {
     public String sendEmail(String to, String name, String subject, String mensaje, String token) {
 
         // Consultamos logo de empresa
-        Informacion logoInfo = informacionService.obtenerDatoPorNombre("logo");
+        Informacion logoInfo = informacionService.obtenerDatoPorNombre("Logo");
         String logo = logoInfo.getValor();
 
         Map<String, Object> variables = new HashMap<>();
