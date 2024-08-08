@@ -18,4 +18,7 @@ public class Informacion {
 
     @Column(name = "valor", columnDefinition = "LONGTEXT")
     private String valor;
+
+    @Column(name = "tipoDato")
+    private String tipoDato;
 }
